@@ -40,6 +40,7 @@ def main() -> None:
             print(e, file=sys.stderr)
         else:
             print(f"{state.filename}:{m[2]}:{m[3]}: error: {m[1].strip()}", file=sys.stderr)
+        sys.exit(1)
 
 
 if __name__ == "__main__":
