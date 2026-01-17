@@ -1,0 +1,7 @@
+- id: tomllint
+  name: tomllint
+  description: 'A TOML linter written in Python'
+  entry: tomllint
+  language: python
+  types: [toml]
+  require_serial: true
