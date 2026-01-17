@@ -10,14 +10,14 @@ $ pip install tomllint
 
 ## Usage
 
-Usage is self explanatory, simply name the file to lint, or use `-` to indicate that it should read
+Usage is self explanatory, simply name the files to lint, or use `-` to indicate that it should read
 from `stdin`.
 
 ```
-usage: tomllint [-h] input
+usage: tomllint [-h] toml_file [toml_file ...]
 
 positional arguments:
-  input       filename or "-" for stdin
+  toml_file   TOML filenames or "-" for stdin
 
 options:
   -h, --help  show this help message and exit

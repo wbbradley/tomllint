@@ -3,3 +3,4 @@ mypy
 isort
 build
 twine
+pytest
