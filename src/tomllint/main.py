@@ -22,7 +22,7 @@ def parse_args_into_state() -> State:
     args = parser.parse_args()
     from_stdin = args.input == "-"
     return State(
-        filename="<stdin" if from_stdin else args.input,
+        filename="<stdin>" if from_stdin else args.input,
         file=sys.stdin.buffer if from_stdin else open(args.input, "rb"),
         from_stdin=from_stdin,
     )
