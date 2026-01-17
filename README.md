@@ -59,3 +59,23 @@ require("lint").linters.tomllint = {
 	parser = parse_tomllint_output,
 }
 ```
+
+## Pickls Integration
+
+[Pickls](https://github.com/wbbradley/pickls) is a unified LSP that integrates command-line linters
+and formatters with editors like Neovim and Zed. Add the following to your
+`~/.config/pickls/pickls.yaml`:
+
+```yaml
+languages:
+  toml:
+    linters:
+      - program: tomllint
+        args: ["-"]
+        pattern: '(.*):(\d+):(\d+): error: (.*)'
+        line_match: 2
+        start_col_match: 3
+        description_match: 4
+        use_stderr: true
+        use_stdin: true
+```
