@@ -98,3 +98,12 @@ Test error output format with invalid TOML:
 echo 'key = "unclosed' | python -m tomllint.main -
 # Output: <stdin>:1:16: error: Illegal character '\n'
 ```
+
+# Contributors
+
+`tomllint` was made possible by the following contributors:
+
+- @wbbradley
+- @Taffer
+
+If you'd like to contribute to `tomllint`, please feel free to open an issue or submit a pull request!
