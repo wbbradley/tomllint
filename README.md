@@ -79,3 +79,18 @@ languages:
         use_stderr: true
         use_stdin: true
 ```
+
+## pre-commit Integration
+
+pre-commit is a framework for managing and maintaining multi-language
+pre-commit hooks. To use `tomllint` to check your files when doing a
+`git commit`, add this to your `.pre-commit-config.yaml`:
+
+```yaml
+repos:
+  - repo: https://github.com/wbbradley/tomllint
+    rev: 0ba6be6
+    hooks:
+      - id: tomllint
+        files: '\.toml$'
+```
