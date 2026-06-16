@@ -14,13 +14,14 @@ Usage is self explanatory, simply name the files to lint, or use `-` to indicate
 from `stdin`.
 
 ```
-usage: tomllint [-h] toml_file [toml_file ...]
+usage: tomllint [-h] [--list-files] toml_file [toml_file ...]
 
 positional arguments:
   toml_file   TOML filenames or "-" for stdin
 
 options:
   -h, --help  show this help message and exit
+  --list-files  List files that would be linted and exit
 ```
 
 ## Neovim Integration
