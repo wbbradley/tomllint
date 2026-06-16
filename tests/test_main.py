@@ -143,7 +143,7 @@ class TestErrorHandling:
     """Tests for error handling."""
 
     def test_nonexistent_file(self, tmp_path: Path) -> None:
-        """Nonexistent file should cause an error."""
+        """Nonexistent file should produce a clean diagnostic, not a traceback."""
         nonexistent = tmp_path / "does_not_exist.toml"
         result = subprocess.run(
             [*TOMLLINT_CMD, str(nonexistent)],
@@ -151,3 +151,74 @@ class TestErrorHandling:
             text=True,
         )
         assert result.returncode != 0
+        assert f"{nonexistent}:0:0: error:" in result.stderr
+        assert "Traceback" not in result.stderr
+
+    def test_nonexistent_then_valid_continues(self, tmp_path: Path, valid_toml: Path) -> None:
+        """A bad file should not abort the run; later files are still checked."""
+        nonexistent = tmp_path / "does_not_exist.toml"
+        result = subprocess.run(
+            [*TOMLLINT_CMD, "--verbose", str(nonexistent), str(valid_toml)],
+            capture_output=True,
+            text=True,
+        )
+        assert result.returncode == 1
+        assert f"{nonexistent}:0:0: error:" in result.stderr
+        assert f"{valid_toml}:1:1: info: linted successfully" in result.stderr
+
+
+class TestVerbose:
+    """Tests for the --verbose / -v flag."""
+
+    def test_valid_file_verbose_long(self, valid_toml: Path) -> None:
+        """Valid file with --verbose: exit 0, info diagnostic on stderr."""
+        result = subprocess.run(
+            [*TOMLLINT_CMD, "--verbose", str(valid_toml)],
+            capture_output=True,
+            text=True,
+        )
+        assert result.returncode == 0
+        assert f"{valid_toml}:1:1: info: linted successfully" in result.stderr
+
+    def test_valid_file_verbose_short(self, valid_toml: Path) -> None:
+        """Valid file with -v: same as --verbose."""
+        result = subprocess.run(
+            [*TOMLLINT_CMD, "-v", str(valid_toml)],
+            capture_output=True,
+            text=True,
+        )
+        assert result.returncode == 0
+        assert f"{valid_toml}:1:1: info: linted successfully" in result.stderr
+
+    def test_invalid_file_verbose_no_success_line(self, invalid_toml: Path) -> None:
+        """Invalid file with --verbose: error line, no success line."""
+        result = subprocess.run(
+            [*TOMLLINT_CMD, "--verbose", str(invalid_toml)],
+            capture_output=True,
+            text=True,
+        )
+        assert result.returncode == 1
+        assert ": error:" in result.stderr
+        assert "info: linted successfully" not in result.stderr
+
+    def test_multiple_valid_files_verbose(self, valid_toml: Path, another_valid_toml: Path) -> None:
+        """Multiple valid files with --verbose: one success line each."""
+        result = subprocess.run(
+            [*TOMLLINT_CMD, "--verbose", str(valid_toml), str(another_valid_toml)],
+            capture_output=True,
+            text=True,
+        )
+        assert result.returncode == 0
+        assert f"{valid_toml}:1:1: info: linted successfully" in result.stderr
+        assert f"{another_valid_toml}:1:1: info: linted successfully" in result.stderr
+
+    def test_stdin_verbose(self) -> None:
+        """Valid stdin with --verbose: <stdin> success line."""
+        result = subprocess.run(
+            [*TOMLLINT_CMD, "--verbose", "-"],
+            input='key = "value"\n',
+            capture_output=True,
+            text=True,
+        )
+        assert result.returncode == 0
+        assert "<stdin>:1:1: info: linted successfully" in result.stderr

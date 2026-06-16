@@ -14,14 +14,19 @@ Usage is self explanatory, simply name the files to lint, or use `-` to indicate
 from `stdin`.
 
 ```
-usage: tomllint [-h] toml_file [toml_file ...]
+usage: tomllint [-h] [--verbose] toml_file [toml_file ...]
 
 positional arguments:
-  toml_file   TOML filenames or "-" for stdin
+  toml_file      TOML filenames or "-" for stdin
 
 options:
-  -h, --help  show this help message and exit
+  -h, --help     show this help message and exit
+  --verbose, -v  emit an info diagnostic for each file that lints successfully
 ```
+
+By default `tomllint` is silent on success and only reports errors. Pass `--verbose`/`-v`
+to also emit a compiler-style `filename:1:1: info: linted successfully` line (on stderr)
+for each file that lints cleanly.
 
 ## Neovim Integration
 
