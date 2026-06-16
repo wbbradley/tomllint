@@ -13,14 +13,22 @@ from typing import BinaryIO, List, NamedTuple
 
 def get_parser() -> argparse.ArgumentParser:
     """Create and configure the argument parser for tomllint."""
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(
+        description="A TOML Linter. Checks for basic syntactic errors in any TOML file."
+    )
     parser.add_argument("toml_file", help='TOML filenames or "-" for stdin', nargs="+")
+    parser.add_argument(
+        "--list-files",
+        action="store_true",
+        help="List files that would be linted and exit",
+    )
     return parser
 
 
 class Args(NamedTuple):
     filenames: List[str]
     from_stdin: bool
+    list_files: bool
 
 
 def get_args() -> Args:
@@ -28,12 +36,12 @@ def get_args() -> Args:
 
     Handles the special case of "-" to indicate reading from stdin.
     """
-    parser = get_parser()
-    args = parser.parse_args()
+    args = get_parser().parse_args()
     from_stdin = args.toml_file == ["-"]
     return Args(
         filenames=["<stdin>"] if from_stdin else args.toml_file,
         from_stdin=from_stdin,
+        list_files=args.list_files,
     )
 
 
@@ -58,6 +66,12 @@ def check_file(file: BinaryIO, filename: str) -> int:
 def main() -> None:
     """Entry point for tomllint. Exits with 0 if all files are valid, 1 otherwise."""
     args = get_args()
+
+    if args.list_files:
+        for filename in args.filenames:
+            print(filename)
+        sys.exit(0)
+
     error_code = 0
     if args.from_stdin:
         error_code |= check_file(file=sys.stdin.buffer, filename="<stdin>")

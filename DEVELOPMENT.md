@@ -2,7 +2,7 @@
 
 ## Setup
 
-Create and activate the development environment:
+1.  **Create and activate the development environment:**
 
 ```bash
 ./setup-env
@@ -15,6 +15,13 @@ To recreate the environment from scratch:
 ./setup-env -f
 source .venv/bin/activate
 ```
+
+2. **Install the package in editable mode:**
+
+```bash
++pip install -e .
+```
+This step is crucial if you want to manually test the tool. It makes your local tomllint source code available to your shell, allowing you to run commands like `tomllint` or `python -m tomllint.main`.
 
 ## Running Tests
 

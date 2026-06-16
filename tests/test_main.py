@@ -151,3 +151,48 @@ class TestErrorHandling:
             text=True,
         )
         assert result.returncode != 0
+
+
+class TestListFiles:
+    """Tests for --list-files flag."""
+
+    def test_list_files_single(self, valid_toml: Path) -> None:
+        """--list-files should print the filename and exit 0."""
+        result = subprocess.run(
+            [*TOMLLINT_CMD, "--list-files", str(valid_toml)],
+            capture_output=True,
+            text=True,
+        )
+        assert result.returncode == 0
+        assert result.stdout.strip() == str(valid_toml)
+        assert result.stderr == ""
+
+    def test_list_files_multiple(self, valid_toml: Path, another_valid_toml: Path) -> None:
+        """--list-files should print all filenames and exit 0."""
+        result = subprocess.run(
+            [
+                *TOMLLINT_CMD,
+                "--list-files",
+                str(valid_toml),
+                str(another_valid_toml),
+            ],
+            capture_output=True,
+            text=True,
+        )
+        assert result.returncode == 0
+        assert result.stdout.strip().split("\n") == [
+            str(valid_toml),
+            str(another_valid_toml),
+        ]
+        assert result.stderr == ""
+
+    def test_list_files_does_not_lint(self, invalid_toml: Path) -> None:
+        """--list-files should not lint, even if the file is invalid."""
+        result = subprocess.run(
+            [*TOMLLINT_CMD, "--list-files", str(invalid_toml)],
+            capture_output=True,
+            text=True,
+        )
+        assert result.returncode == 0
+        assert result.stdout.strip() == str(invalid_toml)
+        assert result.stderr == ""
