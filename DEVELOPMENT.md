@@ -112,5 +112,6 @@ echo 'key = "unclosed' | python -m tomllint.main -
 
 - @wbbradley
 - @Taffer
+- @peterfarrell
 
 If you'd like to contribute to `tomllint`, please feel free to open an issue or submit a pull request!
