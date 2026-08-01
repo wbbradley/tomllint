@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.3.4] - 2026-07-31
+
+### Changed
+- Relicensed the project from CC0 1.0 Universal to the MIT License, with
+  copyright © 2026 Will Bradley.
+
 ## [0.3.3] - 2026-06-16
 
 ### Added
