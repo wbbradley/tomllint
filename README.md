@@ -94,7 +94,7 @@ pre-commit hooks. To use `tomllint` to check your files when doing a
 ```yaml
 repos:
   - repo: https://github.com/wbbradley/tomllint
-    rev: v0.3.4
+    rev: v0.3.5
     hooks:
       - id: tomllint
 ```

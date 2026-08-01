@@ -10,7 +10,7 @@ requires-python = ">=3.11"
 keywords = ["toml", "lint"]
 readme = "README.md"
 authors = [{ name = "Will Bradley" }]
-license = "MIT"
+license = "MIT-0"
 license-files = ["LICENSE"]
 
 [project.urls]

@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.3.5] - 2026-07-31
+
+### Changed
+- Corrected the project license from MIT to MIT No Attribution (MIT-0).
+
 ## [0.3.4] - 2026-07-31
 
 ### Changed
