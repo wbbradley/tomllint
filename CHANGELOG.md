@@ -1,6 +1,6 @@
 # Changelog
 
-## [Unreleased]
+## [0.3.6] - 2026-07-31
 
 ### Added
 - An installable `tomllint(1)` manual page for system packages, Python installation prefixes,
