@@ -22,3 +22,6 @@ line-length = 100
 
 [project.scripts]
 tomllint = "tomllint.main:main"
+
+[tool.setuptools.data-files]
+"share/man/man1" = ["man/tomllint.1"]

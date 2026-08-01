@@ -10,7 +10,7 @@ $ pip install tomllint
 
 ## Usage
 
-Usage is self explanatory, simply name the files to lint, or use `-` to indicate that it should read
+Usage is self explanatory: name one or more files to lint, or use `-` as the sole filename to read
 from `stdin`.
 
 ```
@@ -27,6 +27,10 @@ options:
 By default `tomllint` is silent on success and only reports errors. Pass `--verbose`/`-v`
 to also emit a compiler-style `filename:1:1: info: linted successfully` line (on stderr)
 for each file that lints cleanly.
+
+Release artifacts include a `tomllint(1)` manual page. System package installations and modern
+`pipx` installations expose it through `man tomllint`. A virtual-environment installation places
+it under that environment's `share/man/man1`, which may not be on `MANPATH`.
 
 ## Neovim Integration
 

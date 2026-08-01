@@ -1,0 +1,89 @@
+.TH TOMLLINT 1 "2026-07-31" "tomllint" "User Commands"
+.SH NAME
+tomllint \- check TOML files for syntax errors
+.SH SYNOPSIS
+.B tomllint
+.RB [ \-h ]
+.RB [ \-v | \-\-verbose ]
+.I toml_file
+.RI [ toml_file ...]
+.SH DESCRIPTION
+.B tomllint
+checks one or more files for TOML syntax errors using Python's built-in TOML parser.
+It writes diagnostics to standard error and is silent when every input is valid unless
+verbose mode is enabled.
+.PP
+When the sole
+.I toml_file
+operand is
+.BR \- ,
+.B tomllint
+reads TOML from standard input and uses
+.B <stdin>
+as the diagnostic filename.
+When supplied alongside other operands,
+.B \-
+is treated as a literal filename.
+.SH OPTIONS
+.TP
+.BR \-h , " " \-\-help
+Show a usage summary and exit.
+.TP
+.BR \-v , " " \-\-verbose
+Write an informational diagnostic for each input that passes validation.
+.SH EXIT STATUS
+.TP
+.B 0
+Every input contains valid TOML, or help was requested.
+.TP
+.B 1
+At least one input contains invalid TOML or could not be opened.
+.TP
+.B 2
+The command line is invalid, such as when no input is supplied.
+.SH DIAGNOSTICS
+TOML syntax errors use the following form:
+.PP
+.nf
+filename:line:column: error: message
+.fi
+.PP
+Files that cannot be opened use line and column zero:
+.PP
+.nf
+filename:0:0: error: reason
+.fi
+.PP
+With
+.BR \-\-verbose ,
+successful inputs produce:
+.PP
+.nf
+filename:1:1: info: linted successfully
+.fi
+.SH EXAMPLES
+Check one file:
+.PP
+.nf
+tomllint pyproject.toml
+.fi
+.PP
+Check multiple files:
+.PP
+.nf
+tomllint pyproject.toml config.toml
+.fi
+.PP
+Check standard input:
+.PP
+.nf
+tomllint \-
+.fi
+.PP
+Report successful validation:
+.PP
+.nf
+tomllint \-\-verbose pyproject.toml
+.fi
+.SH SEE ALSO
+.BR python (1)

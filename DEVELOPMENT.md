@@ -64,6 +64,18 @@ Run mypy:
 mypy src/tomllint/main.py
 ```
 
+## Manual Page
+
+Check the manual page for roff problems and render it for inspection:
+
+```bash
+mandoc -T lint -W warning man/tomllint.1
+mandoc man/tomllint.1
+```
+
+The built wheel should contain the page under its data scheme at
+`share/man/man1/tomllint.1`; installers map that path beneath their installation prefix.
+
 ## Publishing
 
 ```bash

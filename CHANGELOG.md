@@ -1,5 +1,11 @@
 # Changelog
 
+## [Unreleased]
+
+### Added
+- An installable `tomllint(1)` manual page for system packages, Python installation prefixes,
+  and modern `pipx` installations.
+
 ## [0.3.5] - 2026-07-31
 
 ### Changed
